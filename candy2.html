@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Candy Order Form</title>
+</head>
+<body>
+    <form id="candyForm">
+        <label for="candyName">Candy Name:</label>
+        <select id="candyName" name="candyName">
+            <option value="Dairy milk">Dairy milk</option>
+            <option value="Eclairs">Eclairs</option>
+            <option value="Milkybar">Milkybar</option>
+            <option value="Barone">Barone</option>
+            <option value="5 star">5 star</option>
+        </select><br><br>
+        
+        <label for="description">Description:</label>
+        <input type="text" id="description" name="description"><br><br>
+        
+        <label for="price">Price:</label>
+        <input type="number" id="price" name="price"><br><br>
+        
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" name="quantity"><br><br>
+        
+        <label for="buyQuantity">Buy Quantity:</label>
+        <input type="number" id="buyQuantity" name="buyQuantity"><br><br>
+        
+        <button type="submit">Submit</button>
+        <button type="button" id="editButton">Edit</button>
+        <button type="button" id="deleteButton">Delete</button>
+
+    </form>
+
+    <div id="submittedData" style="display: none;">
+        <h2>Submitted Candy Information:</h2>
+        <p><strong>Candy Name:</strong> <span id="submittedCandyName"></span></p>
+        <p><strong>Description:</strong> <span id="submittedDescription"></span></p>
+        <p><strong>Price:</strong> <span id="submittedPrice"></span></p>
+        <p><strong>Quantity:</strong> <span id="submittedQuantity"></span></p>
+        <p><strong>Buy Quantity:</strong> <span id="submittedBuyQuantity"></span></p>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.0/axios.min.js"></script>
+
+    <script>
+        const candyForm = document.getElementById('candyForm');
+        const submittedData = document.getElementById('submittedData');
+        const submittedCandyName = document.getElementById('submittedCandyName');
+        const submittedDescription = document.getElementById('submittedDescription');
+        const submittedPrice = document.getElementById('submittedPrice');
+        const submittedQuantity = document.getElementById('submittedQuantity');
+        const submittedBuyQuantity = document.getElementById('submittedBuyQuantity');
+
+        candyForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            
+            const candyName = document.getElementById('candyName').value;
+            const description = document.getElementById('description').value;
+            const price = document.getElementById('price').value;
+            const quantity = document.getElementById('quantity').value;
+            const buyQuantity = document.getElementById('buyQuantity').value;
+
+            
+            submittedCandyName.textContent = candyName;
+            submittedDescription.textContent = description;
+            submittedPrice.textContent = price;
+            submittedQuantity.textContent = quantity;
+            submittedBuyQuantity.textContent = buyQuantity;
+
+            
+            submittedData.style.display = 'block';
+
+
+            
+            const candyData = {
+                candyName,
+                description,
+                price,
+                quantity,
+                buyQuantity
+            };
+            axios.post("https://crudcrud.com/api/e611a0e6ef60438e96eaad84af46b0e7/candy", candyData)
+                .then((Response) => {
+                    console.log(response)
+                })
+                .catch((err) => {
+                    console.log(error)
+                })     
+
+
+           
+        });
+    </script>
+</body>
+</html>
